@@ -35,7 +35,8 @@ def calculate_index(ticket):
 
 tickketsid = sorted([calculate_index(data) for data in TICKETS])
 
+print(f"Part 1: {max(tickketsid)}")
 for ticket in range(50, 700):
     if ticket not in tickketsid:
         if ticket - 1 in tickketsid and ticket + 1 in tickketsid:
-            print(ticket)
+            print(f"Part 2: {ticket}")

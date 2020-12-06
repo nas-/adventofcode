@@ -2,7 +2,7 @@ fin = open("input.txt", "r")
 
 data = [data for data in fin.read().split("\n\n")]
 part1 = sum(len(set(x.replace('\n', '').strip())) for x in data)
-print(f'part 1: {part1}')
+print(f'Part 1: {part1}')
 
 total = 0
 for x in data:
@@ -12,4 +12,4 @@ for x in data:
         k.append(set(z))
     total += len(set.intersection(*k))
 
-print(f'part 2: {total}')
+print(f'Part 2: {total}')

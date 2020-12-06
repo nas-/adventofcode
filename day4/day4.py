@@ -9,6 +9,7 @@ class Passport(object):
     def __init__(self, data: str):
         self.valid = False
         self.polar = False
+        self.part2=False
         elements = data.lower().split(' ')
         self.features = {}
         for element in elements:
@@ -25,13 +26,13 @@ class Passport(object):
             ihr_valid = 2010 <= int(self.features.get('iyr')) <= 2020
             eyr_valid = 2020 <= int(self.features.get('eyr')) <= 2030
             hgt_valid = (
-                self.features.get('hgt').endswith('cm') and 150 <= int(self.features.get('hgt')[:-2]) <= 193) \
-            or (self.features.get('hgt').endswith('in') and 59 <= int(self.features.get('hgt')[:-2]) <= 76)
+                                self.features.get('hgt').endswith('cm') and 150 <= int(
+                            self.features.get('hgt')[:-2]) <= 193) \
+                        or (self.features.get('hgt').endswith('in') and 59 <= int(self.features.get('hgt')[:-2]) <= 76)
             hcl_valid = bool(re.fullmatch(r'#[0-9a-f]{6}', self.features.get('hcl')))
             ecl_valid = self.features.get('ecl') in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
             pid_valid = bool(re.fullmatch(r'\d{9}', self.features.get('pid')))
-            self.valid = all([byr_valid, ihr_valid, eyr_valid, hgt_valid, hcl_valid, ecl_valid, pid_valid])
+            self.part2 = all([byr_valid, ihr_valid, eyr_valid, hgt_valid, hcl_valid, ecl_valid, pid_valid])
 
-
-counts = sum([Passport(elem).valid for elem in passports])
-print(counts)
+print(f"Part 1: {sum([Passport(elem).valid for elem in passports])}")
+print(f"Part 2: {sum([Passport(elem).part2 for elem in passports])}")
