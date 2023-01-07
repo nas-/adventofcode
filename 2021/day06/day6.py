@@ -1,14 +1,13 @@
-from collections import Counter
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 
 def get_inputs(file):
     with open(file) as file:
-        numbers = map(int, file.readlines()[0].strip().split(','))
+        numbers = map(int, file.readlines()[0].strip().split(","))
         return list(numbers)
 
 
-fishes = get_inputs('input')
+fishes = get_inputs("input")
 
 
 def process_day(fish_school, days=1):
@@ -26,5 +25,5 @@ def process_day(fish_school, days=1):
     return sum(a.values())
 
 
-print(f'Part 1: {process_day(fishes, 80)}')
-print(f'Part 2: {process_day(fishes, 256)}')
+print(f"Part 1: {process_day(fishes, 80)}")
+print(f"Part 2: {process_day(fishes, 256)}")

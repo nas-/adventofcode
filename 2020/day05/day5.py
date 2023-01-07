@@ -1,4 +1,4 @@
-fin = open("input.txt", "r")
+fin = open("input.txt")
 
 TICKETS = [data.strip() for data in fin.readlines()]
 
@@ -16,11 +16,11 @@ def back(a, b):
 def place(low_bound, up_bound, element):
     for row in element:
         if up_bound - low_bound == 1:
-            if row in ['F', 'L']:
+            if row in ["F", "L"]:
                 return low_bound
             else:
                 return up_bound
-        if row in ['F', 'L']:
+        if row in ["F", "L"]:
             low_bound, up_bound = front(low_bound, up_bound)
         else:
             low_bound, up_bound = back(low_bound, up_bound)
@@ -33,7 +33,7 @@ def calculate_index(ticket):
     return row * 8 + seat
 
 
-tickketsid = sorted([calculate_index(data) for data in TICKETS])
+tickketsid = sorted(calculate_index(data) for data in TICKETS)
 
 print(f"Part 1: {max(tickketsid)}")
 for ticket in range(50, 700):

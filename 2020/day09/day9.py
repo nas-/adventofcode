@@ -1,5 +1,3 @@
-import os
-
 with open("input.txt") as fin:
     instructions = []
     for operation in fin:
@@ -22,9 +20,9 @@ for instruction in range(ciptherlength, len(instructions)):
     if found1:
         break
     X = instructions[instruction]
-    tocheck = instructions[instruction - ciptherlength:instruction]
+    tocheck = instructions[instruction - ciptherlength : instruction]
     if not check(tocheck, X):
-        print(f'Part 1: {X}')
+        print(f"Part 1: {X}")
         bug = X
         break
 
@@ -35,10 +33,12 @@ for instruction in range(0, len(instructions)):
     if found2:
         break
     while total < bug and index < len(instructions):
-        total = sum(instructions[instruction - index:instruction])
+        total = sum(instructions[instruction - index : instruction])
         if total == bug:
-            print(
-                f'Part 2: {min(instructions[instruction - index:instruction]) + max(instructions[instruction - index:instruction])}')
+            result = min(instructions[instruction - index : instruction]) + max(
+                instructions[instruction - index : instruction]
+            )
+            print(f"Part 2: {result}")
             found2 = True
             break
         index = index + 1

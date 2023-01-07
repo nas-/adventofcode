@@ -1,4 +1,3 @@
-import os
 import functools
 
 with open("input.txt") as fin:
@@ -16,7 +15,7 @@ for index, element in enumerate(B):
     joltage = B[index + 1] - element
     joltageDiffs.append(joltage)
 
-print(f'Part1 :{joltageDiffs.count(3) * joltageDiffs.count(1)}')
+print(f"Part1 :{joltageDiffs.count(3) * joltageDiffs.count(1)}")
 
 
 @functools.lru_cache(128)
@@ -26,7 +25,7 @@ def get_ways(i):
     return sum(get_ways(j) for j in range(i + 1, len(B)) if B[j] - B[i] <= 3)
 
 
-print(f'Part 2: {get_ways(0)}')
+print(f"Part 2: {get_ways(0)}")
 
 # def dp(i):
 #     if i == len(instructions) - 1:

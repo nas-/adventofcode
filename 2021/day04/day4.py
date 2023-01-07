@@ -1,7 +1,7 @@
 def get_imputs_boards(file):
     with open(file) as file:
         lines = [a.strip() for a in file.readlines()]
-        numbers = map(int, lines[0].split(','))
+        numbers = map(int, lines[0].split(","))
         boards = []
         board = []
         for line in lines[2:]:
@@ -9,11 +9,11 @@ def get_imputs_boards(file):
                 boards.append(board)
                 board = []
             elif line == lines[-1]:
-                board.append(list(map(int, [a for a in line.split(' ') if a])))
+                board.append(list(map(int, [a for a in line.split(" ") if a])))
                 boards.append(board)
                 board = []
             else:
-                board.append(list(map(int, [a for a in line.split(' ') if a])))
+                board.append(list(map(int, [a for a in line.split(" ") if a])))
     return numbers, boards
 
 
@@ -31,7 +31,7 @@ def process_board(number, board):
 
 
 def get_score(number, board):
-    return number * sum([sum([x for x in i if x > 0]) for i in board])
+    return number * sum(sum(x for x in i if x > 0) for i in board)
 
 
 def process_multiple(numbers, boards):
@@ -59,6 +59,6 @@ def part_2(numbers, boards):
                 return test
 
 
-numbers, boards = get_imputs_boards('input')
+numbers, boards = get_imputs_boards("input")
 print(process_multiple(numbers, boards))
 print(part_2(numbers, boards))

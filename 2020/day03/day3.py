@@ -1,4 +1,4 @@
-fin = open("input.txt", "r")
+fin = open("input.txt")
 
 data = [data.strip() for data in fin.readlines()]
 
@@ -8,7 +8,7 @@ def slope(y, x):
     for i, el in enumerate(data):
         if i % y == 0:
             element = (int((i * x) / y)) % len(el)
-            if el[element] == '#':
+            if el[element] == "#":
                 tree += 1
     return tree
 

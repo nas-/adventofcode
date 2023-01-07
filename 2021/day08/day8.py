@@ -2,10 +2,10 @@ def get_inputs(file):
     with open(file) as file:
         lines = file.readlines()
 
-        inputs = [x.strip().split('|') for x in lines]
+        inputs = [x.strip().split("|") for x in lines]
         inputs2 = []
         for y in inputs:
-            inputs2.append([x.strip().split(' ') for x in y])
+            inputs2.append([x.strip().split(" ") for x in y])
     return inputs2
 
 
@@ -72,19 +72,19 @@ class Row:
         elif identified == (6, 2, 3):
             return 0
         else:
-            print(f'OMG {identified}')
+            print(f"OMG {identified}")
 
     def calculate_output(self):
         output = []
         for word in self.output:
             character = self.decode_word(word)
             output.append(str(character))
-        return int(''.join(output))
+        return int("".join(output))
 
 
-k = get_inputs('input')
-print(f'Part 1: {process_inputs_part_1(k)}')
+k = get_inputs("input")
+print(f"Part 1: {process_inputs_part_1(k)}")
 
 rows = [Row(x) for x in k]
-print(f'Part 2: {sum(x.output_value for x in rows)}')
+print(f"Part 2: {sum(x.output_value for x in rows)}")
 pass

@@ -16,7 +16,7 @@ def calculate_low_points(data):
             cond.append(compute_adjacent(data, x, y - 1, data[x][y]))
             if all(cond):
                 low_points.append((x, y))
-            cond = []
+            []
     return low_points
 
 
@@ -38,16 +38,16 @@ def calculate_basin(x, y):
     basin = {(x, y)}
     for a, b in neighbours(x, y):
         if height_map[x][y] < height_map[a][b] < 9:
-            basin=basin.union(calculate_basin(a, b))
+            basin = basin.union(calculate_basin(a, b))
     return basin
 
 
-height_map = get_inputs('input')
+height_map = get_inputs("input")
 N = len(height_map)
 M = len(height_map[0])
 low_points = calculate_low_points(height_map)
-print(f'Part 1: {sum((1 + height_map[x][y]) for x, y in low_points)}')
-basins = sorted([calculate_basin(x, y) for x, y in low_points],key=lambda x:len(x))
-print(f'Part 2: {len(basins[-1])*len(basins[-2])*len(basins[-3])}')
+print(f"Part 1: {sum((1 + height_map[x][y]) for x, y in low_points)}")
+basins = sorted((calculate_basin(x, y) for x, y in low_points), key=lambda x: len(x))
+print(f"Part 2: {len(basins[-1])*len(basins[-2])*len(basins[-3])}")
 
 pass

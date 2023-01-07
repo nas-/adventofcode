@@ -1,9 +1,6 @@
-import os
-
 with open("input.txt") as fin:
     instructions = [
-        (operation, int(argument))
-        for operation, argument in map(str.split, fin)
+        (operation, int(argument)) for operation, argument in map(str.split, fin)
     ]
 
 seen_indices = set()
@@ -13,22 +10,22 @@ index = 0
 while index not in seen_indices:
     seen_indices.add(index)
     isntr, value = instructions[index]
-    if isntr == 'acc':
+    if isntr == "acc":
         generator += value
         index += 1
 
-    elif isntr == 'jmp':
+    elif isntr == "jmp":
         index += value
         continue
-    elif isntr == 'nop':
+    elif isntr == "nop":
         index += 1
-print(f'Part 1: {generator}')
+print(f"Part 1: {generator}")
 
 with open("input.txt") as fin:
     instructions = []
     corrupt = []
     for operation, argument in map(str.split, fin):
-        if operation != 'acc':
+        if operation != "acc":
             corrupt.append(len(instructions))
         instructions.append((operation, int(argument)))
 
@@ -37,10 +34,10 @@ corrupt_map = {"jmp": "nop", "nop": "jmp"}
 for possibly_corrupted in corrupt:
     isntr_corr, value_corr = instructions[possibly_corrupted]
     A = isntr_corr
-    if isntr_corr == 'jmp':
-        isntr_corr = 'nop'
-    elif isntr_corr == 'nop':
-        isntr_corr = 'jmp'
+    if isntr_corr == "jmp":
+        isntr_corr = "nop"
+    elif isntr_corr == "nop":
+        isntr_corr = "jmp"
     instructions[possibly_corrupted] = isntr_corr, value_corr
     seen_indices = set()
     generator = 0
@@ -58,4 +55,4 @@ for possibly_corrupted in corrupt:
         break
     instructions[possibly_corrupted] = A, value_corr
 
-print(f'Part 2: {generator}')
+print(f"Part 2: {generator}")

@@ -1,5 +1,3 @@
-import os
-
 start_values = [8, 13, 1, 0, 18, 9]
 
 
@@ -11,10 +9,9 @@ def next_value(last, index, seen):
     return index - seen.get(last, index)
 
 
-steps, ns = 30000000, [8,13,1,0,18,9]
-last=ns[-1]
+steps, ns = 30000000, [8, 13, 1, 0, 18, 9]
+last = ns[-1]
 seen = {n: i for i, n in enumerate(ns)}
-for i in range(len(ns)-1,steps-1):
-    seen[last],last=i,i-seen.get(last,i)
+for i in range(len(ns) - 1, steps - 1):
+    seen[last], last = i, i - seen.get(last, i)
 print(last)
-

@@ -1,4 +1,4 @@
-with open('input') as file:
+with open("input") as file:
     text = [a.strip() for a in file.readlines()]
 
 
@@ -10,12 +10,12 @@ def part_1(text):
         for i in text:
             acc += int(i[k])
         if acc > (len(text) + 1) / 2:
-            result.append('1')
-            result2.append('0')
+            result.append("1")
+            result2.append("0")
         else:
-            result.append('0')
-            result2.append('1')
-    return int(''.join(result), 2) * int(''.join(result2), 2)
+            result.append("0")
+            result2.append("1")
+    return int("".join(result), 2) * int("".join(result2), 2)
 
 
 def part_2(text):
@@ -28,10 +28,10 @@ def part_2_1(text, part_1):
         for i in text:
             acc += int(i[k])
         if acc >= (len(text)) / 2:
-            caracter = '1'
+            caracter = "1"
 
         else:
-            caracter = '0'
+            caracter = "0"
         w = []
         for i in text:
             if part_1:
