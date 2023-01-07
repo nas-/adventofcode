@@ -1,0 +1,7 @@
+[tool.isort]
+profile = "black"
+
+[tool.vulture]
+min_confidence = 80
+paths = ["2020","2021","2022"]
+sort_by_size = true
