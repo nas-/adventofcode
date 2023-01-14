@@ -4,15 +4,43 @@ use std::str::Lines;
 fn main() {
     let data = fs::read_to_string("input.txt").expect("Unable to read file");
     let split_data = data.lines();
-    println!("Result of first part = {}", firstpart(split_data))
+    println!("Result of first part = {}", firstpart(split_data.clone()));
+    println!("Result of second part = {}", second_part(split_data))
+}
+
+fn second_part(split_data: Lines) -> i32 {
+    let mut total = 0;
+    for a in split_data {
+        let result = generate_score(a.chars().nth(2).expect("Not possible to parse"));
+        let theirscore = generate_score(a.chars().nth(0).expect("Not possible to parse"));
+
+        let myscore: i32 = match result {
+            2 => theirscore + 3,
+            1 => match theirscore {
+                1 => 3,
+                2 => 1,
+                3 => 2,
+                _ => -10000,
+            },
+            3 => match theirscore {
+                1 => 2 + 6,
+                2 => 3 + 6,
+                3 => 1 + 6,
+                _ => -10000,
+            },
+            _ => -10000,
+        };
+        total += myscore
+    }
+    total
 }
 
 fn firstpart(split_data: Lines) -> i32 {
     let mut total = 0;
     for a in split_data {
-        let myscore = generate_score(a.chars().nth(2).expect("Not possible to parse"), false);
-        let theirscore = generate_score(a.chars().nth(0).expect("Not possible to parse"), true);
-        let mut result = 0;
+        let myscore = generate_score(a.chars().nth(2).expect("Not possible to parse"));
+        let theirscore = generate_score(a.chars().nth(0).expect("Not possible to parse"));
+        let result: i32;
         if myscore == theirscore {
             result = 3
         } else if (theirscore == 1 && myscore == 3)
@@ -28,22 +56,11 @@ fn firstpart(split_data: Lines) -> i32 {
     total
 }
 
-fn generate_score(score_char: char, mine: bool) -> i32 {
-    let mut result = 0;
-    if mine {
-        match score_char {
-            'A' => result = 1,
-            'B' => result = 2,
-            'C' => result = 3,
-            _ => println!("anything"),
-        }
-    } else {
-        match score_char {
-            'X' => result = 1,
-            'Y' => result = 2,
-            'Z' => result = 3,
-            _ => println!("anything"),
-        }
+fn generate_score(score_char: char) -> i32 {
+    match score_char {
+        'A' | 'X' => 1,
+        'B' | 'Y' => 2,
+        'C' | 'Z' => 3,
+        _ => -1,
     }
-    result
 }
