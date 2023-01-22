@@ -17,7 +17,7 @@ fn first_part(split_data: Lines) -> i32 {
         let arr2: Vec<char> = second.chars().collect();
         let first_set: HashSet<char> = HashSet::from_iter(arr1);
         let second_set: HashSet<char> = HashSet::from_iter(arr2);
-        let common = first_set.intersection(&second_set);
+        let common = first_set.intersection(&second_set).collect::<HashSet<&char>>();
         for character in common {
             total += get_score(character)
         }
@@ -36,10 +36,8 @@ fn second_part(split_data: Lines) -> i32 {
         let first_set: HashSet<char> = HashSet::from_iter(arr1);
         let second_set: HashSet<char> = HashSet::from_iter(arr2);
         let third_set: HashSet<&char> = HashSet::from_iter(&arr3);
-        let common = first_set.intersection(&second_set);
-        let common_vec: Vec<&char> = Vec::from_iter(common.clone());
-        let intermediate_set: HashSet<&char> = HashSet::from_iter(common_vec);
-        let result = intermediate_set.intersection(&third_set);
+        let common = first_set.intersection(&second_set).collect::<HashSet<&char>>();
+        let result = common.intersection(&third_set).collect::<HashSet<&&char>>();
         for character in result {
             total += get_score(character)
         }
