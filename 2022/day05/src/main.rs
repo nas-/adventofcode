@@ -1,8 +1,7 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::Read;
-use std::collections::HashMap;
-
 
 #[derive(Debug)]
 struct Move {
@@ -22,7 +21,6 @@ impl Move {
     }
 }
 
-
 fn main() {
     let file = File::open("input.txt").unwrap();
     let mut reader = BufReader::new(file);
@@ -37,25 +35,20 @@ fn main() {
         moves.push(Move::from_line(line))
     }
 
-    let mut docker = parse_initial_config(initial_config);
-    first_part(&mut docker, &moves);
-    second_part(&mut docker, &moves);
+    let docker = parse_initial_config(initial_config);
+    first_part(&mut docker.clone(), &moves);
+    second_part(&mut docker.clone(), &moves);
 }
 
 fn first_part(ship_state: &mut HashMap<i32, Vec<char>>, moves: &Vec<Move>) -> () {
-    let mut docker = ship_state.clone();
-    for mouvement in moves {
-        let content = docker.get(&mouvement.from_stack).unwrap();
-        let a = content.len() - mouvement.amount as usize;
-        let (remaining, to_move) = content.split_at(a);
-        let to_stack_value = docker.get(&mouvement.to_stack).unwrap();
-        let mut new_value_to_stack = to_stack_value.clone();
-        new_value_to_stack.extend(to_move.iter().rev());
-        docker.insert(mouvement.from_stack, remaining.clone().to_vec());
-        docker.insert(mouvement.to_stack, new_value_to_stack.clone().to_vec());
+    for movement in moves {
+        let from_stack = ship_state.get_mut(&movement.from_stack).unwrap();
+        let amount = movement.amount as usize;
+        let to_move = from_stack.split_off(from_stack.len() - amount);
+        let to_stack = ship_state.get_mut(&movement.to_stack).unwrap();
+        to_stack.extend(to_move.iter().rev());
     }
-
-    let result = collect_result(&mut docker);
+    let result = collect_result(ship_state);
 
     println!("First part {:?}", result);
 }
@@ -72,47 +65,38 @@ fn collect_result(docker: &mut HashMap<i32, Vec<char>>) -> String {
     result
 }
 
-
-fn second_part(ship_state: &mut HashMap<i32, Vec<char>>, moves: &Vec<Move>) -> () {
-    let mut docker = ship_state.clone();
-    for mouvement in moves {
-        let content = docker.get(&mouvement.from_stack).unwrap();
-        let a = content.len() - mouvement.amount as usize;
-        let (remaining, to_move) = content.split_at(a);
-        let to_stack_value = docker.get(&mouvement.to_stack).unwrap();
-        let mut new_value_to_stack = to_stack_value.clone();
-        new_value_to_stack.extend(to_move.iter());
-        docker.insert(mouvement.from_stack, remaining.clone().to_vec());
-        docker.insert(mouvement.to_stack, new_value_to_stack.clone().to_vec());
+fn second_part(ship_state: &mut HashMap<i32, Vec<char>>, moves: &Vec<Move>) {
+    for movement in moves {
+        let from_stack = ship_state.get_mut(&movement.from_stack).unwrap();
+        let amount = movement.amount as usize;
+        let to_move = from_stack.split_off(from_stack.len() - amount);
+        let to_stack = ship_state.get_mut(&movement.to_stack).unwrap();
+        to_stack.extend(to_move.iter());
     }
-    let result = collect_result(&mut docker);
+    let result = collect_result(ship_state);
 
     println!("Second part result {:?}", result);
 }
 
-
 fn parse_initial_config(initial_config: &str) -> HashMap<i32, Vec<char>> {
     let lines = initial_config.split("\n").collect::<Vec<&str>>();
     let mut docker: HashMap<i32, Vec<char>> = HashMap::new();
-    let mut indexes: HashMap<i32, i32> = HashMap::new();
     let last_line = lines[lines.len() - 1];
-    for (i, c) in last_line.chars().enumerate() {
-        if c != ' ' {
-            indexes.insert(c.to_digit(10).unwrap() as i32, i as i32);
-        }
-    }
-    for (i, line) in lines.iter().rev().enumerate() {
-        if i != 0 {
-            for (key, value) in indexes.iter() {
-                match line.chars().nth(*value as usize) {
-                    Some(' ') => {}
-                    Some(val) => {
-                        let _ = &docker.entry(*key).or_insert(Vec::new());
-                        let curr_value = docker.get_mut(&key).unwrap();
-                        curr_value.push(val);
-                    },
-                    None => {}
+    let indexes = last_line
+        .chars()
+        .enumerate()
+        .filter(|(_, c)| *c != ' ')
+        .map(|(i, c)| (c.to_digit(10).unwrap() as i32, i as i32))
+        .collect::<HashMap<i32, i32>>();
+
+    for (_, line) in lines.iter().rev().enumerate().filter(|(i, _)| *i != 0) {
+        for (key, value) in indexes.iter() {
+            match line.chars().nth(*value as usize) {
+                Some(' ') => {}
+                Some(val) => {
+                    docker.entry(*key).or_default().push(val);
                 }
+                None => {}
             }
         }
     }
