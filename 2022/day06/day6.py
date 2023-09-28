@@ -11,7 +11,7 @@ def find_start_of_packet(data: str, capacity: int) -> int:
     return -1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("input.txt") as fin:
         inputs = fin.readline().strip()
     print(f"First part result {find_start_of_packet(inputs, 4)}")

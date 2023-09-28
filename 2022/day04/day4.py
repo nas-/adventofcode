@@ -25,7 +25,7 @@ def second_part(rows: list[list[str]]) -> int:
     return counter
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("input.txt") as fin:
         inputs: list[list[str]] = [jolt.strip().split(",") for jolt in fin]
     print(f"First part result is {first_part(inputs)}, expected 466")

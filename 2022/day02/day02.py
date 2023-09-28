@@ -11,12 +11,12 @@ for i in inputs:
     if my_score == theirscore:
         result = 3
     elif (
-            theirscore == 1
-            and my_score == 3
-            or theirscore == 2
-            and my_score == 1
-            or theirscore == 3
-            and my_score == 2
+        theirscore == 1
+        and my_score == 3
+        or theirscore == 2
+        and my_score == 1
+        or theirscore == 3
+        and my_score == 2
     ):  # rock
         result = 0
     else:
