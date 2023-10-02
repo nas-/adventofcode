@@ -3,7 +3,15 @@ from functools import reduce
 
 
 class Monkey:
-    def __init__(self, id: int, starting_items: list[int], operation: str, divisible_by: int, value_true, value_false):
+    def __init__(
+        self,
+        id: int,
+        starting_items: list[int],
+        operation: str,
+        divisible_by: int,
+        value_true,
+        value_false,
+    ):
         self.id = id
         self.starting_items = starting_items
 
@@ -33,20 +41,25 @@ def parse_input(data):
     blocks = [line.strip().split("\n") for line in data.split("\n\n")]
     monkey_list = {}
     for block in blocks:
-        a = Monkey(id=int(block[0].split(" ")[1].strip(":")),
-                   starting_items=[int(item.strip()) for item in block[1].split(":")[1].split(",")],
-                   operation=" ".join(block[2].split(" ")[-3:]),
-                   divisible_by=int(block[3].split(" ")[-1]),
-                   value_true=int(block[4].split(" ")[-1]),
-                   value_false=int(block[5].split(" ")[-1])
-                   )
-        monkey_list[a.id]=a
+        a = Monkey(
+            id=int(block[0].split(" ")[1].strip(":")),
+            starting_items=[
+                int(item.strip()) for item in block[1].split(":")[1].split(",")
+            ],
+            operation=" ".join(block[2].split(" ")[-3:]),
+            divisible_by=int(block[3].split(" ")[-1]),
+            value_true=int(block[4].split(" ")[-1]),
+            value_false=int(block[5].split(" ")[-1]),
+        )
+        monkey_list[a.id] = a
 
     return monkey_list
 
 
 def play_round(monkeylist, worry_level):
-    my_worry_level = reduce(operator.mul, [monkey.divisible_by for monkey in monkeylist.values()], 1)
+    my_worry_level = reduce(
+        operator.mul, [monkey.divisible_by for monkey in monkeylist.values()], 1
+    )
     for monkey_id in monkeylist.keys():
         monkey = monkeylist[monkey_id]
         if len(monkey.starting_items) == 0:
