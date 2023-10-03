@@ -28,7 +28,6 @@ def part_1(filename: str):
     return count_sand
 
 
-
 def part_two(filename: str) -> int:
     rocks = parse_input(filename)
 
@@ -78,6 +77,10 @@ def parse_input(filename: str):
 if __name__ == "__main__":
     start = datetime.now()
     part_1 = part_1("input.txt")
-    print(f"Part 1: {part_1}, elapsed: {(datetime.now() - start).total_seconds()*1000} ms")
+    print(
+        f"Part 1: {part_1}, elapsed: {(datetime.now() - start).total_seconds()*1000} ms"
+    )
     part_2 = part_two("input.txt")
-    print(f"Part 1: {part_2}, elapsed: {(datetime.now() - start).total_seconds()*1000} ms")
+    print(
+        f"Part 1: {part_2}, elapsed: {(datetime.now() - start).total_seconds()*1000} ms"
+    )
