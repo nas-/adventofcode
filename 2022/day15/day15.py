@@ -30,7 +30,9 @@ def tuning_frequency(beacon_x, beacon_y):
 
 
 def part_1(sensors, target_row):
-    beacon_coords = [(sensor.closest_beacon_x, sensor.closest_beacon_y) for sensor in sensors]
+    beacon_coords = [
+        (sensor.closest_beacon_x, sensor.closest_beacon_y) for sensor in sensors
+    ]
     max_distance = max(sensor.min_distance_to_beacon for sensor in sensors)
 
     min_x = min(sensor.x for sensor in sensors) - max_distance
@@ -54,7 +56,9 @@ def part_2(sensors, max_x):
             for sensor in sensors:
                 if sensor.distance(*pt) <= sensor.min_distance_to_beacon:
                     in_range = True
-                    beacon_x = sensor.x + (sensor.min_distance_to_beacon - abs(beacon_y - sensor.y))
+                    beacon_x = sensor.x + (
+                        sensor.min_distance_to_beacon - abs(beacon_y - sensor.y)
+                    )
                     break
             if not in_range:
                 part2 = (beacon_x, beacon_y)
@@ -69,14 +73,26 @@ if __name__ == "__main__":
     time = datetime.now()
     with open("input.txt") as f:
         data = f.readlines()
-    regex = re.compile(r"Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)")
+    regex = re.compile(
+        r"Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)"
+    )
     sensors = []
     for sensor in data:
         match = regex.match(sensor)
-        sensors.append(Sensor(int(match.group(1)), int(match.group(2)), int(match.group(3)), int(match.group(4))))
+        sensors.append(
+            Sensor(
+                int(match.group(1)),
+                int(match.group(2)),
+                int(match.group(3)),
+                int(match.group(4)),
+            )
+        )
     forbittens_positons = part_1(sensors, 2000000)
-    print(f"Part 1: {len(forbittens_positons)}, elapsed = {(datetime.now() - time).total_seconds() * 1000}ms")
+    print(
+        f"Part 1: {len(forbittens_positons)}, elapsed = {(datetime.now() - time).total_seconds() * 1000}ms"
+    )
 
     possibile_solutions = part_2(sensors, 4000000)
     print(
-        f"Part 2: {[tuning_frequency(possibile_solutions[0], possibile_solutions[1])]}, elapsed = {(datetime.now() - time).total_seconds() * 1000}ms")
+        f"Part 2: {[tuning_frequency(possibile_solutions[0], possibile_solutions[1])]}, elapsed = {(datetime.now() - time).total_seconds() * 1000}ms"
+    )
